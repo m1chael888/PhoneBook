@@ -11,16 +11,9 @@ namespace PhoneBook.m1chael888
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appSettiongs.json")
-                .Build();
-            string connectionString = config.GetConnectionString("source");
-
             var collection = new ServiceCollection();
 
             collection.AddScoped<IRouter, Router>();
-            collection.AddScoped<PhoneBookContext>(x => new PhoneBookContext(connectionString));
 
             var provider = collection.BuildServiceProvider();
 
