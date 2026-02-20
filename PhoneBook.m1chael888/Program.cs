@@ -1,7 +1,8 @@
 ﻿using System.Text;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using PhoneBook.m1chael888.Infrastructure;
+using PhoneBook.m1chael888.Views;
+using PhoneBook.m1chael888.Controllers;
 
 namespace PhoneBook.m1chael888
 {
@@ -14,13 +15,18 @@ namespace PhoneBook.m1chael888
             var collection = new ServiceCollection();
 
             collection.AddScoped<IRouter, Router>();
+            collection.AddScoped<ContactController>();
+            collection.AddScoped<IContactView, ContactView>();
 
             var provider = collection.BuildServiceProvider();
 
             //resolve controller(s) to pass to router
 
             var router = provider.GetRequiredService<IRouter>();
-            router.Route();
+            var contactController = provider.GetRequiredService<ContactController>();
+            var contactView = provider.GetRequiredService<IContactView>();
+
+            router.Route(contactController, contactView);
         }
     }
 }
