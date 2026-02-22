@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PhoneBook.m1chael888.Infrastructure;
+using PhoneBook.m1chael888.Data;
+
 
 #nullable disable
 

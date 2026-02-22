@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using Microsoft.EntityFrameworkCore.ValueGeneration;
+using Spectre.Console;
 using static PhoneBook.m1chael888.Enums.ContactViewEnums;
 using static PhoneBook.m1chael888.Enums.EnumExtensions;
 
@@ -7,6 +8,7 @@ namespace PhoneBook.m1chael888.Views;
 public interface IContactView
 {
     MainMenuOption ShowMainMenu();
+    string GetInput(string msg, string? error = null);
 }
 public class ContactView : IContactView
 {
@@ -20,5 +22,11 @@ public class ContactView : IContactView
                 .WrapAround()
             );
         return choice;
+    }
+
+    public string GetInput(string msg, string? error = null)
+    {
+        var input = AnsiConsole.Ask<string>($"[purple]{msg}[/]");
+        return input;
     }
 }

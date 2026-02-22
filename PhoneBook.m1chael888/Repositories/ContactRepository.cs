@@ -1,6 +1,20 @@
-﻿namespace PhoneBook.m1chael888.Repositories
+﻿using PhoneBook.m1chael888.Models;
+using PhoneBook.m1chael888.Data;
+
+namespace PhoneBook.m1chael888.Repositories
 {
-    internal class ContactRepository
+    public interface IContactRepository
     {
+        void Create(Contact contact);
+    }
+    internal class ContactRepository : IContactRepository
+    {
+        public void Create(Contact contact)
+        {
+            using PhoneBookContext context = new PhoneBookContext();
+
+            context.Contacts.Add(contact);
+            context.SaveChanges();
+        }
     }
 }

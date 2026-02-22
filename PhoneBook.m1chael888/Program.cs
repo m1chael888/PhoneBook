@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using PhoneBook.m1chael888.Infrastructure;
 using PhoneBook.m1chael888.Views;
 using PhoneBook.m1chael888.Controllers;
+using PhoneBook.m1chael888.Services;
+using PhoneBook.m1chael888.Repositories;
 
 namespace PhoneBook.m1chael888
 {
@@ -17,6 +19,8 @@ namespace PhoneBook.m1chael888
             collection.AddScoped<IRouter, Router>();
             collection.AddScoped<ContactController>();
             collection.AddScoped<IContactView, ContactView>();
+            collection.AddScoped<IContactService, ContactService>();
+            collection.AddScoped<IContactRepository, ContactRepository>();
 
             var provider = collection.BuildServiceProvider();
 

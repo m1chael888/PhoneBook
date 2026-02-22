@@ -11,7 +11,10 @@ namespace PhoneBook.m1chael888.Infrastructure
     {
         public void Route(ContactController contactController, IContactView contactView)
         {
-            contactController.HandleMainMenu();
+            while (true)
+            {
+                contactController.HandleMainMenu();
+            }
         }
     }
 }

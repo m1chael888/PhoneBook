@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PhoneBook.m1chael888.Models;
 
-namespace PhoneBook.m1chael888.Infrastructure
+namespace PhoneBook.m1chael888.Data
 {
     internal class PhoneBookContext : DbContext
     {
