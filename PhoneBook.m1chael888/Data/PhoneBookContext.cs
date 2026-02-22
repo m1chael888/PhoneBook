@@ -9,7 +9,7 @@ namespace PhoneBook.m1chael888.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data source=PhoneBook.db");
+            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=phonebook;TrustServerCertificate=True;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
     }
 }

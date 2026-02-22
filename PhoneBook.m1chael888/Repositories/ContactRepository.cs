@@ -13,7 +13,7 @@ namespace PhoneBook.m1chael888.Repositories
         {
             using PhoneBookContext context = new PhoneBookContext();
 
-            context.Contacts.Add(contact);
+            context.Add(contact);
             context.SaveChanges();
         }
     }
