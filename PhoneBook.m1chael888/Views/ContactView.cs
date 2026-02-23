@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ValueGeneration;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
+using PhoneBook.m1chael888.Models;
 using Spectre.Console;
 using static PhoneBook.m1chael888.Enums.ContactViewEnums;
 using static PhoneBook.m1chael888.Enums.EnumExtensions;
@@ -11,6 +11,7 @@ public interface IContactView
     MainMenuOption ShowMainMenu();
     string GetInput(string msg, string? error = null);
     void ReturnWithMsg(string msg);
+    void DisplayContactList(List<Contact> contacts);
 }
 public class ContactView : IContactView
 {
@@ -37,10 +38,21 @@ public class ContactView : IContactView
         return input;
     }
 
-    public void ReturnWithMsg(string msg)
+    public void DisplayContactList(List<Contact> contacts)
     {
-        Console.Clear();
-        AnsiConsole.MarkupLine($"[LightCoral]{msg}[/]");
+        AnsiConsole.MarkupLine("[LightCoral]Your contacts::[/]\n");
+        AnsiConsole.MarkupLine($"[LightCoral]{"Name".PadRight(20)}\t{"Email".PadRight(20)}\t{"Phone Number"}[/]");
+        foreach (var c in contacts)
+        {
+            AnsiConsole.MarkupLine($"{CheckLength(c.Name).PadRight(20)}\t{CheckLength(c.Email).PadRight(20)}\t{c.PhoneNumber}");
+        }
+        Console.WriteLine();
+        ReturnWithMsg();
+    }
+
+    public void ReturnWithMsg(string? msg = null)
+    {
+        if (!msg.IsNullOrEmpty()) AnsiConsole.MarkupLine($"[LightCoral]{msg}[/]");
         AnsiConsole.Status()
             .Spinner(Spinner.Known.Point)
             .SpinnerStyle("white")
@@ -48,5 +60,11 @@ public class ContactView : IContactView
             {
                 Console.ReadKey();
             });
+    }
+
+    string CheckLength(string myString)
+    {
+        if (myString.Length > 20) myString = myString.Substring(0, 18) + "...";
+        return myString;
     }
 }

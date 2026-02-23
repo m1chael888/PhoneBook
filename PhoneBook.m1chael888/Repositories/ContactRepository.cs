@@ -6,6 +6,7 @@ namespace PhoneBook.m1chael888.Repositories
     public interface IContactRepository
     {
         void Create(Contact contact);
+        List<Contact> Read();
     }
     internal class ContactRepository : IContactRepository
     {
@@ -15,6 +16,14 @@ namespace PhoneBook.m1chael888.Repositories
 
             context.Add(contact);
             context.SaveChanges();
+        }
+
+        public List<Contact> Read()
+        {
+            using PhoneBookContext context = new PhoneBookContext();
+
+            var contacts = context.Contacts.ToList();
+            return contacts;
         }
     }
 }

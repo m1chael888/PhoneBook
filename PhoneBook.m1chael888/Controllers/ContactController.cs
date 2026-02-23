@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using PhoneBook.m1chael888.Models;
+﻿using PhoneBook.m1chael888.Models;
 using PhoneBook.m1chael888.Services;
 using PhoneBook.m1chael888.Views;
 using System.Text.RegularExpressions;
@@ -28,7 +27,7 @@ public class ContactController
                 HandleCreateContact();
                 break;
             case MainMenuOption.ReadContacts:
-
+                HandleReadContacts();
                 break;
             case MainMenuOption.UpdateContact:
 
@@ -75,16 +74,30 @@ public class ContactController
             PhoneNumber = phoneNumber
         };
         _contactService.CallCreate(contact);
+        Console.Clear();
         _contactView.ReturnWithMsg("Contact saved successfully");
     }
 
-    bool ValidEmail(string input)
+    private void HandleReadContacts()
+    {
+        var contacts = _contactService.CallRead();
+        if (contacts.Count == 0)
+        {
+            _contactView.ReturnWithMsg("Your contact list is empty");
+        }
+        else
+        {
+            _contactView.DisplayContactList(contacts);
+        }
+    }
+
+    private bool ValidEmail(string input)
     {
         Regex validEmail = new Regex("^\\S+@\\S+\\.\\S+$");
         return (validEmail.IsMatch(input) || input.Length < 1);
     }
 
-    bool ValidPhoneNumber(string input)
+    private bool ValidPhoneNumber(string input)
     {
         return ((input.Length == 10 && int.TryParse(input, out int x) || input.Length < 1));
     }

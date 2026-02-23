@@ -1,12 +1,12 @@
 ﻿using PhoneBook.m1chael888.Models;
 using PhoneBook.m1chael888.Repositories;
-using System.Text.RegularExpressions;
 
 namespace PhoneBook.m1chael888.Services
 {
     public interface IContactService
     {
         void CallCreate(Contact contact);
+        List<Contact> CallRead();
     }
     public class ContactService : IContactService
     {
@@ -19,6 +19,12 @@ namespace PhoneBook.m1chael888.Services
         public void CallCreate(Contact contact)
         {
             _contactRepository.Create(contact);
+        }
+
+        public List<Contact> CallRead()
+        {
+            var contacts = _contactRepository.Read();
+            return contacts;
         }
     }
 }
