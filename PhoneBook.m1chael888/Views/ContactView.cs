@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.ValueGeneration;
+using Microsoft.IdentityModel.Tokens;
 using Spectre.Console;
 using static PhoneBook.m1chael888.Enums.ContactViewEnums;
 using static PhoneBook.m1chael888.Enums.EnumExtensions;
@@ -9,6 +10,7 @@ public interface IContactView
 {
     MainMenuOption ShowMainMenu();
     string GetInput(string msg, string? error = null);
+    void ReturnWithMsg(string msg);
 }
 public class ContactView : IContactView
 {
@@ -16,9 +18,10 @@ public class ContactView : IContactView
     {
         var choice = AnsiConsole.Prompt(
             new SelectionPrompt<MainMenuOption>()
-                .Title("Choose an option")
+                .Title("[LightCoral]Choose an option::[/]")
                 .AddChoices(Enum.GetValues<MainMenuOption>())
-                .UseConverter(x => GetDescription(x))
+                .UseConverter(x => $"[grey]{GetDescription(x)}[/]")
+                .HighlightStyle("white")
                 .WrapAround()
             );
         return choice;
@@ -26,7 +29,22 @@ public class ContactView : IContactView
 
     public string GetInput(string msg, string? error = null)
     {
-        var input = AnsiConsole.Ask<string>($"[purple]{msg}[/]");
+        Console.Clear();
+        if (!error.IsNullOrEmpty()) AnsiConsole.MarkupLine($"\n[red]{error}[/]");
+        var input = AnsiConsole.Ask<string>($"[LightCoral]{msg}[/]");
         return input;
+    }
+
+    public void ReturnWithMsg(string msg)
+    {
+        Console.Clear();
+        AnsiConsole.MarkupLine($"[LightCoral]{msg}[/]");
+        AnsiConsole.Status()
+            .Spinner(Spinner.Known.Point)
+            .SpinnerStyle("white")
+            .Start("Press any key to proceed", x =>
+            {
+                Console.ReadKey();
+            });
     }
 }

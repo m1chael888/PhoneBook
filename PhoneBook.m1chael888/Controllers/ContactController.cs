@@ -55,5 +55,6 @@ public class ContactController
             PhoneNumber = phoneNumber
         };
         _contactService.CallCreate(contact);
+        _contactView.ReturnWithMsg("Contact saved successfully");
     }
 }
