@@ -30,8 +30,10 @@ public class ContactView : IContactView
     public string GetInput(string msg, string? error = null)
     {
         Console.Clear();
-        if (!error.IsNullOrEmpty()) AnsiConsole.MarkupLine($"\n[red]{error}[/]");
-        var input = AnsiConsole.Ask<string>($"[LightCoral]{msg}[/]");
+        if (!error.IsNullOrEmpty()) AnsiConsole.MarkupLine($"[red]{error}[/]");
+        var prompt = new TextPrompt<string>($"[LightCoral]{msg}[/]")
+            .AllowEmpty();
+        var input = AnsiConsole.Prompt(prompt);
         return input;
     }
 

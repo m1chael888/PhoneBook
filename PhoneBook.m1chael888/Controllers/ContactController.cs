@@ -1,6 +1,8 @@
-﻿using PhoneBook.m1chael888.Models;
+﻿using Microsoft.IdentityModel.Tokens;
+using PhoneBook.m1chael888.Models;
 using PhoneBook.m1chael888.Services;
 using PhoneBook.m1chael888.Views;
+using System.Text.RegularExpressions;
 using static PhoneBook.m1chael888.Enums.ContactViewEnums;
 
 namespace PhoneBook.m1chael888.Controllers;
@@ -43,10 +45,28 @@ public class ContactController
     public void HandleCreateContact()
     {
         var name = _contactView.GetInput("Enter your contact's name::");
+        while (name.Length < 1)
+        {
+            name = _contactView.GetInput("Enter your contact's name::", "Name can't be empty!");
+        }
 
         var email = _contactView.GetInput("Enter your contact's email (Optional)::");
+        if (email.Length > 0)
+        {
+            while (!ValidEmail(email))
+            {
+                email = _contactView.GetInput("Enter your contact's email (Optional)::", "Invalid email!");
+            }
+        }
 
         var phoneNumber = _contactView.GetInput("Enter your contact's phone number (Optional)::");
+        if (phoneNumber.Length > 0)
+        {
+            while (!ValidPhoneNumber(phoneNumber))
+            {
+                phoneNumber = _contactView.GetInput("Enter your contact's phone number (Optional)::", "Invalid phone number!");
+            }
+        }
 
         var contact = new Contact()
         {
@@ -56,5 +76,16 @@ public class ContactController
         };
         _contactService.CallCreate(contact);
         _contactView.ReturnWithMsg("Contact saved successfully");
+    }
+
+    bool ValidEmail(string input)
+    {
+        Regex validEmail = new Regex("^\\S+@\\S+\\.\\S+$");
+        return (validEmail.IsMatch(input) || input.Length < 1);
+    }
+
+    bool ValidPhoneNumber(string input)
+    {
+        return ((input.Length == 10 && int.TryParse(input, out int x) || input.Length < 1));
     }
 }
