@@ -13,7 +13,7 @@ namespace PhoneBook.m1chael888
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-
+            
             var collection = new ServiceCollection();
 
             collection.AddScoped<IRouter, Router>();

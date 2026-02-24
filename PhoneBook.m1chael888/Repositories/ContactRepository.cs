@@ -1,5 +1,6 @@
 ﻿using PhoneBook.m1chael888.Models;
 using PhoneBook.m1chael888.Data;
+using PhoneBook.m1chael888.Services;
 
 namespace PhoneBook.m1chael888.Repositories
 {
@@ -24,6 +25,35 @@ namespace PhoneBook.m1chael888.Repositories
 
             var contacts = context.Contacts.ToList();
             return contacts;
+        }
+
+        public void Update(Contact updatedContact)
+        {
+            using PhoneBookContext context = new PhoneBookContext();
+
+            var existingContact = context.Contacts
+                .Where(x => x.Id == updatedContact.Id)
+                .FirstOrDefault();
+
+            if (existingContact is Contact)
+            {
+                existingContact.Name = updatedContact.Name;
+                existingContact.Email = updatedContact.Email;
+                existingContact.PhoneNumber = updatedContact.PhoneNumber;
+            }
+            context.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            using PhoneBookContext context = new PhoneBookContext();
+
+            var contact = context.Contacts
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
+
+            if (contact is Contact) context.Contacts.Remove(contact);
+            context.SaveChanges();
         }
     }
 }

@@ -63,7 +63,7 @@ public class ContactController
         {
             while (!ValidPhoneNumber(phoneNumber))
             {
-                phoneNumber = _contactView.GetInput("Enter your contact's phone number (Optional)::", "Invalid phone number!");
+                phoneNumber = _contactView.GetInput("Enter your contact's phone number (Optional)::", "Please use a 10 digit phone number!");
             }
         }
 
