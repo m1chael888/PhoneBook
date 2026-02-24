@@ -7,6 +7,8 @@ namespace PhoneBook.m1chael888.Services
     {
         void CallCreate(Contact contact);
         List<Contact> CallRead();
+        void CallUpdate(Contact contact);
+        void CalLDelete(int id);
     }
     public class ContactService : IContactService
     {
@@ -25,6 +27,16 @@ namespace PhoneBook.m1chael888.Services
         {
             var contacts = _contactRepository.Read();
             return contacts;
+        }
+
+        public void CallUpdate(Contact contact)
+        {
+
+        }
+
+        public void CalLDelete(int id)
+        {
+
         }
     }
 }

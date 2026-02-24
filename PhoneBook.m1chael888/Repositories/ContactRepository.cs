@@ -1,6 +1,5 @@
 ﻿using PhoneBook.m1chael888.Models;
 using PhoneBook.m1chael888.Data;
-using PhoneBook.m1chael888.Services;
 
 namespace PhoneBook.m1chael888.Repositories
 {
@@ -8,6 +7,8 @@ namespace PhoneBook.m1chael888.Repositories
     {
         void Create(Contact contact);
         List<Contact> Read();
+        void Update(Contact updatedContact);
+        void Delete(int id);
     }
     internal class ContactRepository : IContactRepository
     {

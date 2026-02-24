@@ -30,10 +30,10 @@ public class ContactController
                 HandleReadContacts();
                 break;
             case MainMenuOption.UpdateContact:
-
+                HandleUpdateContact();
                 break;
             case MainMenuOption.DeleteContact:
-
+                HandleDeleteContact();
                 break;
             case MainMenuOption.Exit:
                 Environment.Exit(0);
@@ -89,6 +89,16 @@ public class ContactController
         {
             _contactView.DisplayContactList(contacts);
         }
+    }
+
+    private void HandleUpdateContact()
+    {
+
+    }
+
+    private void HandleDeleteContact()
+    {
+
     }
 
     private bool ValidEmail(string input)
