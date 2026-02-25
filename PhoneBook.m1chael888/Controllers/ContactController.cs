@@ -43,6 +43,44 @@ public class ContactController
 
     public void HandleCreateContact()
     {
+        var contact = GetContact();
+        _contactService.CallCreate(contact);
+        Console.Clear();
+        _contactView.ReturnWithMsg("Contact saved successfully");
+    }
+
+    private void HandleReadContacts()
+    {
+        var contacts = _contactService.CallRead();
+        if (contacts.Count == 0)
+        {
+            _contactView.ReturnWithMsg("Your contact list is empty");
+        }
+        else
+        {
+            _contactView.DisplayContactList(contacts);
+        }
+    }
+
+    private void HandleUpdateContact()
+    {
+        var contacts = _contactService.CallRead();
+        var choice = _contactView.DisplayContactPrompt(contacts);
+
+        var newContact = GetContact();
+        _contactService.CallUpdate(newContact);
+    }
+
+    private void HandleDeleteContact()
+    {
+        var contacts = _contactService.CallRead();
+        var choice = _contactView.DisplayContactPrompt(contacts);
+
+
+    }
+
+    private Contact GetContact()
+    {
         var name = _contactView.GetInput("Enter your contact's name::");
         while (name.Length < 1)
         {
@@ -73,32 +111,7 @@ public class ContactController
             Email = email,
             PhoneNumber = phoneNumber
         };
-        _contactService.CallCreate(contact);
-        Console.Clear();
-        _contactView.ReturnWithMsg("Contact saved successfully");
-    }
-
-    private void HandleReadContacts()
-    {
-        var contacts = _contactService.CallRead();
-        if (contacts.Count == 0)
-        {
-            _contactView.ReturnWithMsg("Your contact list is empty");
-        }
-        else
-        {
-            _contactView.DisplayContactList(contacts);
-        }
-    }
-
-    private void HandleUpdateContact()
-    {
-
-    }
-
-    private void HandleDeleteContact()
-    {
-
+        return contact;
     }
 
     private bool ValidEmail(string input)

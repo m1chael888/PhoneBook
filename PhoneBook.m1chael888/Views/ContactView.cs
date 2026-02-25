@@ -12,6 +12,7 @@ public interface IContactView
     string GetInput(string msg, string? error = null);
     void ReturnWithMsg(string msg);
     void DisplayContactList(List<Contact> contacts);
+    Contact DisplayContactPrompt(List<Contact> contacts);
 }
 public class ContactView : IContactView
 {
@@ -50,6 +51,21 @@ public class ContactView : IContactView
         ReturnWithMsg();
     }
 
+    public Contact DisplayContactPrompt(List<Contact> contacts)
+    {
+        AnsiConsole.MarkupLine("[LightCoral]Your contacts::[/]\n");
+        AnsiConsole.MarkupLine($"[LightCoral]{"Name".PadRight(20)}\t{"Email".PadRight(20)}\t{"Phone Number"}[/]");
+        var choice = AnsiConsole.Prompt(
+            new SelectionPrompt<Contact>()
+                .Title("")
+                .AddChoices(contacts)
+                .UseConverter(x => $"[grey]{CheckLength(x.Name).PadRight(20)}\t{CheckLength(x.Email).PadRight(20)}\t{x.PhoneNumber}[/]")
+                .HighlightStyle("white")
+                .WrapAround()
+                );
+        return choice;
+    }
+
     public void ReturnWithMsg(string? msg = null)
     {
         if (!msg.IsNullOrEmpty()) AnsiConsole.MarkupLine($"[LightCoral]{msg}[/]");
@@ -64,7 +80,7 @@ public class ContactView : IContactView
 
     string CheckLength(string myString)
     {
-        if (myString.Length > 20) myString = myString.Substring(0, 18) + "...";
+        if (myString.Length > 16) myString = myString.Substring(0, 14) + "...";
         return myString;
     }
 }
