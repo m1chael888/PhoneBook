@@ -42,10 +42,10 @@ public class ContactView : IContactView
     public void DisplayContactList(List<Contact> contacts)
     {
         AnsiConsole.MarkupLine("[LightCoral]Your contacts::[/]\n");
-        AnsiConsole.MarkupLine($"[LightCoral]{"Name".PadRight(20)}\t{"Email".PadRight(20)}\t{"Phone Number"}[/]");
+        AnsiConsole.MarkupLine($"[LightCoral]{"Name".PadRight(25)}\t{"Email".PadRight(25)}\t{"Phone Number"}[/]");
         foreach (var c in contacts)
         {
-            AnsiConsole.MarkupLine($"{CheckLength(c.Name).PadRight(20)}\t{CheckLength(c.Email).PadRight(20)}\t{c.PhoneNumber}");
+            AnsiConsole.MarkupLine($"{CheckLength(c.Name).PadRight(25)}\t{CheckLength(c.Email).PadRight(25)}\t{c.PhoneNumber}");
         }
         Console.WriteLine();
         ReturnWithMsg();
@@ -54,12 +54,12 @@ public class ContactView : IContactView
     public Contact DisplayContactPrompt(List<Contact> contacts)
     {
         AnsiConsole.MarkupLine("[LightCoral]Your contacts::[/]\n");
-        AnsiConsole.MarkupLine($"[LightCoral]{"Name".PadRight(20)}\t{"Email".PadRight(20)}\t{"Phone Number"}[/]");
+        AnsiConsole.MarkupLine($"[LightCoral]{"Name".PadRight(25)}\t{"Email".PadRight(25)}\t{"Phone Number"}[/]");
         var choice = AnsiConsole.Prompt(
             new SelectionPrompt<Contact>()
                 .Title("")
                 .AddChoices(contacts)
-                .UseConverter(x => $"[grey]{CheckLength(x.Name).PadRight(20)}\t{CheckLength(x.Email).PadRight(20)}\t{x.PhoneNumber}[/]")
+                .UseConverter(x => $"[grey]{CheckLength(x.Name).PadRight(25)}\t{CheckLength(x.Email).PadRight(25)}\t{x.PhoneNumber}[/]")
                 .HighlightStyle("white")
                 .WrapAround()
                 );
@@ -80,7 +80,7 @@ public class ContactView : IContactView
 
     string CheckLength(string myString)
     {
-        if (myString.Length > 16) myString = myString.Substring(0, 14) + "...";
+        if (myString.Length > 21) myString = myString.Substring(0, 18) + "...";
         return myString;
     }
 }

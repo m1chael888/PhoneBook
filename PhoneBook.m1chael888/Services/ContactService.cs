@@ -31,12 +31,12 @@ namespace PhoneBook.m1chael888.Services
 
         public void CallUpdate(Contact contact)
         {
-
+            _contactRepository.Update(contact);
         }
 
         public void CalLDelete(int id)
         {
-
+            _contactRepository.Delete(id);
         }
     }
 }

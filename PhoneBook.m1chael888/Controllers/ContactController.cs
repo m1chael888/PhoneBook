@@ -46,7 +46,7 @@ public class ContactController
         var contact = GetContact();
         _contactService.CallCreate(contact);
         Console.Clear();
-        _contactView.ReturnWithMsg("Contact saved successfully");
+        _contactView.ReturnWithMsg("Contact created successfully");
     }
 
     private void HandleReadContacts()
@@ -68,7 +68,11 @@ public class ContactController
         var choice = _contactView.DisplayContactPrompt(contacts);
 
         var newContact = GetContact();
+        newContact.Id = choice.Id;
+
         _contactService.CallUpdate(newContact);
+        Console.Clear();
+        _contactView.ReturnWithMsg("Contact updated successfully");
     }
 
     private void HandleDeleteContact()
@@ -76,7 +80,9 @@ public class ContactController
         var contacts = _contactService.CallRead();
         var choice = _contactView.DisplayContactPrompt(contacts);
 
-
+        _contactService.CalLDelete(choice.Id);
+        Console.Clear();
+        _contactView.ReturnWithMsg("Contact deleted successfully");
     }
 
     private Contact GetContact()
