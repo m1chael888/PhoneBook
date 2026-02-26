@@ -5,6 +5,8 @@ using PhoneBook.m1chael888.Views;
 using PhoneBook.m1chael888.Controllers;
 using PhoneBook.m1chael888.Services;
 using PhoneBook.m1chael888.Repositories;
+using PhoneBook.m1chael888.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace PhoneBook.m1chael888
 {
@@ -17,6 +19,7 @@ namespace PhoneBook.m1chael888
             var collection = new ServiceCollection();
 
             collection.AddScoped<IRouter, Router>();
+            collection.AddScoped<IDbSeeder, DbSeeder>();
             collection.AddScoped<ContactController>();
             collection.AddScoped<IContactView, ContactView>();
             collection.AddScoped<IContactService, ContactService>();
@@ -24,7 +27,8 @@ namespace PhoneBook.m1chael888
 
             var provider = collection.BuildServiceProvider();
 
-            //resolve controller(s) to pass to router
+            var seeder = provider.GetRequiredService<IDbSeeder>();
+            if (seeder.ShouldSeed<Contact>()) seeder.Seed();
 
             var router = provider.GetRequiredService<IRouter>();
             var contactController = provider.GetRequiredService<ContactController>();
