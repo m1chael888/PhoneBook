@@ -52,7 +52,7 @@ public class ContactController
     private void HandleReadContacts()
     {
         var contacts = _contactService.CallRead();
-        if (contacts.Count == 0)
+        if (!contacts.Any())
         {
             _contactView.ReturnWithMsg("Your contact list is empty");
         }
@@ -65,24 +65,37 @@ public class ContactController
     private void HandleUpdateContact()
     {
         var contacts = _contactService.CallRead();
-        var choice = _contactView.DisplayContactPrompt(contacts);
+        if (!contacts.Any())
+        {
+            _contactView.ReturnWithMsg("Your contact list is empty");
+        }
+        else
+        {
+            var choice = _contactView.DisplayContactPrompt(contacts);
+            var newContact = GetContact();
+            newContact.Id = choice.Id;
 
-        var newContact = GetContact();
-        newContact.Id = choice.Id;
-
-        _contactService.CallUpdate(newContact);
-        Console.Clear();
-        _contactView.ReturnWithMsg("Contact updated successfully");
+            _contactService.CallUpdate(newContact);
+            Console.Clear();
+            _contactView.ReturnWithMsg("Contact updated successfully");
+        }
     }
 
     private void HandleDeleteContact()
     {
         var contacts = _contactService.CallRead();
-        var choice = _contactView.DisplayContactPrompt(contacts);
+        if (!contacts.Any())
+        {
+            _contactView.ReturnWithMsg("Your contact list is empty");
+        }
+        else
+        {
+            var choice = _contactView.DisplayContactPrompt(contacts);
 
-        _contactService.CalLDelete(choice.Id);
-        Console.Clear();
-        _contactView.ReturnWithMsg("Contact deleted successfully");
+            _contactService.CalLDelete(choice.Id);
+            Console.Clear();
+            _contactView.ReturnWithMsg("Contact deleted successfully");
+        }
     }
 
     private Contact GetContact()
