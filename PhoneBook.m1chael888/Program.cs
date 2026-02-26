@@ -6,7 +6,6 @@ using PhoneBook.m1chael888.Controllers;
 using PhoneBook.m1chael888.Services;
 using PhoneBook.m1chael888.Repositories;
 using PhoneBook.m1chael888.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace PhoneBook.m1chael888
 {
