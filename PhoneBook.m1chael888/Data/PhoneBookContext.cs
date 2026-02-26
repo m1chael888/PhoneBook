@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PhoneBook.m1chael888.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace PhoneBook.m1chael888.Data
 {
@@ -9,7 +10,12 @@ namespace PhoneBook.m1chael888.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=phonebook;TrustServerCertificate=True;Trusted_Connection=True;MultipleActiveResultSets=true");
+            var builder = new ConfigurationBuilder()
+            .AddJsonFile("appSettings.json")
+            .Build();
+            string connectionString = builder.GetConnectionString("ConnectionString");
+
+            optionsBuilder.UseSqlServer(connectionString);
         }
     }
 }
